@@ -27,7 +27,6 @@ const login = async (
   username: string,
   password: string
 ): Promise<LoginResponse | null> => {
-  // TODO: 올바른 username, password를 입력하면 {message: 'SUCCESS', token: (원하는 문자열)} 를 반환하세요.
   const user: User | undefined = users.find((user: User) => {
     return user.username === username && user.password === password;
   });
@@ -45,13 +44,12 @@ javascript에서 JSON문자열로 변환하는 이유는 데이터교환, 데이
 ### 4-2) JSON.parse
 
 JSON.stringify과는 정반대로 생각해주면 되는데 JSON문자열을 javascript 객체로 변환하는 역할을 한다.
-즉, JSON 문자열을 파싱하여 JavaScript 데이터로 역직렬화(deserialize)합니다.
+즉, JSON 문자열을 파싱하여 JavaScript 데이터로 역직렬화(deserialize)해준다.
 
 코드에서 login함수에 JSON문자열로 변환한 token을 getUserInfo 함수 에서 다시 객체로 변환시켜 주고있다.
 
 ```js
 const getUserInfo = async (token: string): Promise<UserInfo | null> => {
-  // TODO: login 함수에서 받은 token을 이용해 사용자 정보를 받아오세요.
   const parseToken = JSON.parse(token); //parseToken에는 userInfo와 secret이 담겨있어야함
   if (!parseToken?.secret || parseToken.secret !== _secret) return null;
 
@@ -67,7 +65,7 @@ const getUserInfo = async (token: string): Promise<UserInfo | null> => {
 
 - FormData는 웹 개발에서 자바스크립트를 사용하여 웹 페이지에서 HTML 폼(form)데이터를 동적으로 수집하고 제출하는 데 사용된다. 이를 통해 사용자가 웹 페이지의 폼에 입력한 데이터를 서버로 전송하거나, 클라이언트 측에서 자바스크립트를 사용하여 데이터를 가공하고 처리 할 수 있다.
 - FormData는 폼의 각 입력 필드와 그 값을 쉽게 접근하고, 특정 데이터를 추가, 수정 또는 삭제할 수 있는 메서드를 제공한다.
-  -FormData를 사용하면 사용자 입력을 쉽게 수집하고 AJAX를 통해 비동기적으로 서버에 데이터를 전송하거나, Fetch API와 함께 사용하여 네트워크 요청을 생성할 수 있다.
+- FormData를 사용하면 사용자 입력을 쉽게 수집하고 AJAX를 통해 비동기적으로 서버에 데이터를 전송하거나, Fetch API와 함께 사용하여 네트워크 요청을 생성할 수 있다.
 
 코드에서는 FormData를 객체를 생성 후 username과 password의 키 값을 반환해준다.
 
