@@ -55,11 +55,11 @@ const login = async (
 const getUserInfo = async (token: string): Promise<UserInfo | null> => {
   // TODO: login 함수에서 받은 token을 이용해 사용자 정보를 받아오세요.
   const parseToken = JSON.parse(token); //parseToken에는 userInfo와 secret이 담겨있어야함
-  if (!parseToken?.secret || parseToken.secret) return null;
+  if (!parseToken?.secret || parseToken.secret !== _secret) return null;
 
   const loggedUser: User | undefined = users.find((user: User) => {
+    if (user.userInfo.name === parseToken.user.name) return user;
     console.log("user?", user);
-    if (user.userInfo === parseToken.user.name) return user;
   });
   return loggedUser ? loggedUser.userInfo : null;
 };
@@ -76,8 +76,6 @@ const LoginWithMockAPI = () => {
 
     const formData = new FormData(event.currentTarget);
 
-    console.log("formdata", formData.get("username"));
-
     const loginRes = await login(
       formData.get("username") as string,
       formData.get("password") as string
@@ -90,7 +88,6 @@ const LoginWithMockAPI = () => {
     setUserInfo(userInfo);
   };
   console.log("userInfo", userInfo);
-
   return (
     <div>
       <h1>Login with Mock API</h1>
